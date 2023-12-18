@@ -1,7 +1,4 @@
-from bs4 import BeautifulSoup
 import os
-import csv
-import requests
 import pandas as pd
 import streamlit as st
 
