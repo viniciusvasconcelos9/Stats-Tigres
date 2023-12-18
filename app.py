@@ -15,9 +15,8 @@ sidebar_option = st.sidebar.selectbox('Menu',['Dados Gerais','Team Leaders', 'In
 def load_players_data():
     arquivo = "dados/Dados Atletas - Tigres.xlsx"
     dados = pd.read_excel(arquivo)
-    dados_tratados = dados.drop(['ID'], axis=1)
-    return dados_tratados
-
+    return dados
+    
 def load_game_data():
     files = os.listdir("dados/Jogos/")
     #print(files)
@@ -168,8 +167,40 @@ else:
         selected_season = st.multiselect('Temporada', temporadas(gamestats),temporadas(gamestats))
         selected_comp = st.multiselect('Campeonato', competicoes(gamestats, selected_season), competicoes(gamestats, selected_season))
         gamestats_tratado = df_stats(gamestats, selected_season, selected_comp)
-    
-        st.write('Tackle')
+
+        col2, col3, col4 = st.columns(3)
+
+        col2.write('Tackle')
         tackle_stats = gamestats_tratado.sort_values(by='Tackle', ascending=False).iloc[0:10]
         tackle_stats = tackle_stats.loc[:,['Numero','Tackle']]
-        st.dataframe(tackle_stats, hide_index=True)
+        col2.dataframe(tackle_stats, hide_index=True)
+
+        col3.write('Tackle for loss')
+        tackle_stats = gamestats_tratado.sort_values(by='Tackle for loss', ascending=False).iloc[0:5]
+        tackle_stats = tackle_stats.loc[:,['Numero','Tackle for loss']]
+        col3.dataframe(tackle_stats, hide_index=True)
+
+        col4.write('Sack')
+        tackle_stats = gamestats_tratado.sort_values(by='D-Sack', ascending=False).iloc[0:5]
+        tackle_stats = tackle_stats.loc[:,['Numero','D-Sack']]
+        col4.dataframe(tackle_stats, hide_index=True)
+        
+        col2.write('Interceptações')
+        tackle_stats = gamestats_tratado.sort_values(by='Interceptação', ascending=False).iloc[0:10]
+        tackle_stats = tackle_stats.loc[:,['Numero','Interceptação']]
+        col2.dataframe(tackle_stats, hide_index=True)
+
+        col3.write('Passe defletado')
+        tackle_stats = gamestats_tratado.sort_values(by='Passe defletado', ascending=False).iloc[0:5]
+        tackle_stats = tackle_stats.loc[:,['Numero','Passe defletado']]
+        col3.dataframe(tackle_stats, hide_index=True)
+
+        col4.write('Fumble forçado')
+        tackle_stats = gamestats_tratado.sort_values(by='FF', ascending=False).iloc[0:5]
+        tackle_stats = tackle_stats.loc[:,['Numero','FF']]
+        col4.dataframe(tackle_stats, hide_index=True)
+
+        col4.write('Fumble recuperado')
+        tackle_stats = gamestats_tratado.sort_values(by='FR', ascending=False).iloc[0:5]
+        tackle_stats = tackle_stats.loc[:,['Numero','FR']]
+        col4.dataframe(tackle_stats, hide_index=True)
