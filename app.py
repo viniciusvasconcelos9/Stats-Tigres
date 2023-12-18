@@ -15,7 +15,7 @@ sidebar_option = st.sidebar.selectbox('Menu',['Dados Gerais','Team Leaders', 'In
 def load_players_data():
     arquivo = "dados/Dados Atletas - Tigres.xlsx"
     dados = pd.read_excel(arquivo)
-    dados_tratados = dados.drop(['ID', 'CPF','Endereço','Data de Nascimento','RG', 'E-mail', 'Status'], axis=1)
+    dados_tratados = dados.drop(['ID'], axis=1)
     return dados_tratados
 
 def load_game_data():
