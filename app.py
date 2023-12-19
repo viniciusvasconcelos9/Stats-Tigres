@@ -13,22 +13,32 @@ sidebar_option = st.sidebar.selectbox('Menu',['Dados Gerais','Team Leaders', 'In
 
 
 def load_players_data():
-    arquivo = "dados/Dados Atletas - Tigres.xlsx"
-    dados = pd.read_excel(arquivo)
+    arquivo = "dados/Dados Atletas - Tigres.csv"
+    dados = pd.read_csv(arquivo, sep=';')
     return dados
-    
+
+def file_to_df(arquivo):
+    nome = arquivo.split('-')
+    print(nome[3])
+
+    d = {'Time': nome[3], 'Rodada': nome[2], 'Local': nome[4][:-4], 'Competicao': nome[1], 'Ano': nome[0]}
+    df = pd.DataFrame(data=d, index=[0])
+    print(df)
+
+    return df
+
 def load_game_data():
     files = os.listdir("dados/Jogos/")
     #print(files)
     df = {}
     dados_finais = []
     for file in files:
-        #print(file)
+        print(file)
         dados = []
-        dados.append(pd.read_excel("dados/Jogos/"+file, sheet_name="Indy"))
-        dados.append(pd.read_excel("dados/Jogos/"+file, sheet_name="Sobre"))
+        dados.append(pd.read_csv("dados/Jogos/"+file, sep=','))
+        dados.append(file_to_df(file))
         dados_finais.append(dados)
-    
+        print(dados[0])
     return dados_finais
 
 def temporadas(df):
